@@ -1,0 +1,21 @@
+version: '3'
+services:
+  app:
+    container_name: send_msg_gmail
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8000:8000 
+    environment:
+      - FROM_EMAIL=${FROM_EMAIL}
+      - FROM_EMAIL_PASSWORD=${FROM_EMAIL_PASSWORD}
+    restart: on-failure
+    networks:
+      - network_service
+    expose:
+      - 8000
+  
+networks:
+  network_service:
+    driver: bridge
