@@ -2,35 +2,24 @@ package main
 
 import (
 	"fmt"
-	"net/smtp"
 	"os"
+	"send_msg/services"
 )
 
 func main() {
 
 	// Sender data.
-	from := os.Getenv("FROM_EMAIL")
-	password := os.Getenv("FROM_EMAIL_PASSWORD")
-
-	// Receiver email address.
-	to := []string{
+	fromEmail := os.Getenv("FROM_EMAIL")
+	fromEmailpassword := os.Getenv("FROM_EMAIL_PASSWORD")
+	toSendingUserList := []string{
 		"javharbekernazarov47@gmail.com",
 		"ruzikulovfurqat@gmail.com",
 		"asliddinberdiyevv@gmail.com",
 	}
-
-	// smtp server configuration.
-	smtpHost := "smtp.gmail.com"
-	smtpPort := "587"
-
-	// Message.
-	message := []byte("This is a test email message.")
-
-	// Authentication.
-	auth := smtp.PlainAuth("", from, password, smtpHost)
+	message := "This is a test email message."
 
 	// Sending email.
-	err := smtp.SendMail(smtpHost+":"+smtpPort, auth, from, to, message)
+	err := services.SenderGmail(fromEmail, fromEmailpassword, toSendingUserList, message)
 	if err != nil {
 		fmt.Println(err)
 		return
